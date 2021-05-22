@@ -9,6 +9,8 @@ public class SlimeManager : MonoBehaviour
     NavMeshAgent agent;
     Animator animator;
 
+    public Collider attackCollider; 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +33,23 @@ public class SlimeManager : MonoBehaviour
         if (damager != null)
         {
             Debug.Log("敵にダメージ");
+            animator.SetTrigger("Hurt");
         }
 
     }
+
+    // 攻撃判定の有効化
+    public void EnableCollider()
+    {
+        attackCollider.enabled = true;
+
+    }
+
+    // 攻撃判定の無効化
+    public void DisableCollider()
+    {
+        attackCollider.enabled = false;
+
+    }
+
 }

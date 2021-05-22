@@ -16,7 +16,15 @@ public class PlayerManager : MonoBehaviour
     private Animator animator;
     private Vector3 moveDirection = Vector3.zero;
 
+    //物理演算用
     Rigidbody rb;
+
+    //コライダー制御用
+    public Collider leftHandCollider;
+    public Collider rightHandCollider;
+    public Collider leftFootCollider;
+    public Collider rightFootCollider;
+
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +32,7 @@ public class PlayerManager : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        DisableCollider();
     }
 
     // Update is called once per frame
@@ -48,6 +57,7 @@ public class PlayerManager : MonoBehaviour
         return Physics.Raycast(ray, tolerance);
     }
 
+    // キャラ操作関数
     public void Move()
     {
         //rayを使用した接地判定
@@ -100,6 +110,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    // 攻撃関数
     public void Attack()
     {
         if (Input.GetKeyDown(KeyCode.A))
@@ -109,6 +120,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    // 当たり判定
     private void OnTriggerEnter(Collider other)
     {
         // ダメージを与えるものにぶつかったら
@@ -117,5 +129,23 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.Log("ダメージを受けた");
         }
+    }
+
+    // 攻撃判定の有効化
+    public void EnableCollider()
+    {
+        leftHandCollider.enabled = true;
+        rightHandCollider.enabled = true;
+        leftFootCollider.enabled = true;
+        rightFootCollider.enabled = true;
+    }
+
+    // 攻撃判定の無効化
+    public void DisableCollider()
+    {
+        leftHandCollider.enabled = false;
+        rightHandCollider.enabled = false;
+        leftFootCollider.enabled = false;
+        rightFootCollider.enabled = false;
     }
 }

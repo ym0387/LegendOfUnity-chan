@@ -25,6 +25,11 @@ public class PlayerManager : MonoBehaviour
     public Collider leftFootCollider;
     public Collider rightFootCollider;
 
+    // HP
+    public int maxHp = 100;
+    int hp;
+    public PlayerUIManager playerUIManager;
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +38,7 @@ public class PlayerManager : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         DisableCollider();
+        hp = maxHp;
     }
 
     // Update is called once per frame
@@ -116,7 +122,6 @@ public class PlayerManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             animator.SetTrigger("Attack");
-            Debug.Log("攻撃");
         }
     }
 
@@ -128,8 +133,24 @@ public class PlayerManager : MonoBehaviour
         if (damager != null)
         {
             Debug.Log("ダメージを受けた");
+            animator.SetTrigger("Damage");
+            Damage(damager.damage);
         }
     }
+
+    // 被ダメージ
+    void Damage(int damage)
+    {
+        hp -= damage;
+        if(hp <= 0)
+        {
+            hp = 0;
+            animator.SetTrigger("Die");
+        }
+        Debug.Log("プレイヤーの残りHP" + hp);
+        playerUIManager.UpdateHP(hp);
+    }
+
 
     // 攻撃判定の有効化
     public void EnableCollider()

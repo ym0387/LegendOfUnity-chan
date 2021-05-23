@@ -2,29 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttackBehaviour : StateMachineBehaviour
+public class PlayerHurtBehaviour : StateMachineBehaviour
 {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //攻撃アニメーション中速度を0にする
-        animator.GetComponent<PlayerManager>().speed = 0;
-        
+        animator.ResetTrigger("Damage");
+
+        //速度0にする
+        animator.GetComponent<PlayerManager>().speed = 0.4f;
+
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        //攻撃アニメーション中速度を0にする
-        animator.GetComponent<PlayerManager>().speed = 0;
-    }
+    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    //{
+    //    
+    //}
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //攻撃アニメーション後に速度を戻す
+        //速度0にする
         animator.GetComponent<PlayerManager>().speed = 6;
-
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

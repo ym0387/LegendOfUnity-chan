@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
     //重力等の変更ができるようにパブリック変数とする
     public float gravity;
     public float speed;
+    public float back;
     public float jumpSpeed;
     public float rotateSpeed;
 
@@ -26,22 +27,33 @@ public class PlayerManager : MonoBehaviour
     public Collider rightFootCollider;
 
     // HP
-    public int maxHp = 100;
-    int hp;
+    public float maxHp = 100;
+    float hp;
     public PlayerUIManager playerUIManager;
 
+    //Die判定
+    bool isDie;
 
-    // Start is called before the first frame update
+    //GameOverテキスト
+    public GameObject gameOverText;
+
     void Start()
     {
+        // 各コンポーネント取得
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+
+        //コライダー無効
         DisableCollider();
+
+        // 最大HP付与
         hp = maxHp;
+        playerUIManager.Init(this);
+
+
     }
 
-    // Update is called once per frame
     void Update()
     {
         Move();
@@ -66,6 +78,11 @@ public class PlayerManager : MonoBehaviour
     // キャラ操作関数
     public void Move()
     {
+        if (isDie)
+        {
+            return;
+        }
+
         //rayを使用した接地判定
         if (CheckGrounded() == true)
         {
@@ -98,14 +115,14 @@ public class PlayerManager : MonoBehaviour
                 transform.Rotate(0, rotateSpeed, 0);
             }
 
-            //jump
-            if (Input.GetKeyDown(KeyCode.Space))
+            else if(Input.GetKey(KeyCode.DownArrow))
             {
-                moveDirection.y = jumpSpeed;
+                animator.SetFloat("Back", back);
+                moveDirection.z = back;
             }
 
             //重力を発生させる
-            moveDirection.y -= gravity * Time.deltaTime;
+            //moveDirection.y -= gravity * Time.deltaTime;
 
             //移動の実行
             Vector3 globalDirection = transform.TransformDirection(moveDirection);
@@ -128,6 +145,12 @@ public class PlayerManager : MonoBehaviour
     // 当たり判定
     private void OnTriggerEnter(Collider other)
     {
+        //HPが0のときは当たり判定を受付ない
+        if (hp <= 0)
+        {
+            return;
+        }
+
         // ダメージを与えるものにぶつかったら
         Damager damager = other.GetComponent<Damager>();
         if (damager != null)
@@ -146,19 +169,30 @@ public class PlayerManager : MonoBehaviour
         {
             hp = 0;
             animator.SetTrigger("Die");
+            isDie = true;
+            gameOverText.SetActive(true);
         }
         Debug.Log("プレイヤーの残りHP" + hp);
         playerUIManager.UpdateHP(hp);
+
     }
 
-
-    // 攻撃判定の有効化
-    public void EnableCollider()
+    // ジャブ時攻撃判定の有効化
+    public void EnableColliderForJab()
     {
         leftHandCollider.enabled = true;
-        rightHandCollider.enabled = true;
-        leftFootCollider.enabled = true;
+    }
+
+    // ハイキック時の攻撃判定の有効化
+    public void EnableColliderForHikick()
+    {
         rightFootCollider.enabled = true;
+    }
+
+    // スピンキック時の攻撃判定の有効化
+    public void EnableColliderForSpinkick()
+    {
+        leftFootCollider.enabled = true;
     }
 
     // 攻撃判定の無効化

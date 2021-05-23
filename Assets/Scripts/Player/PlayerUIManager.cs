@@ -7,7 +7,13 @@ public class PlayerUIManager : MonoBehaviour
 {
     public Slider hpSlider;
 
-    public void UpdateHP(int hp)
+    public void Init(PlayerManager playerManager)
+    {
+        hpSlider.maxValue = playerManager.maxHp;
+        hpSlider.value = playerManager.maxHp;
+    }
+
+    public void UpdateHP(float hp)
     {
         hpSlider.value = hp;
     }

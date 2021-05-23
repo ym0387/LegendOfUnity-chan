@@ -15,11 +15,14 @@ public class SlimeManager : MonoBehaviour
     public int maxHp;
     int hp;
 
+    public SlimeUIManager slimeUIManager;
+
 
     // Start is called before the first frame update
     void Start()
     {
         hp = maxHp;
+        slimeUIManager.Init(this);
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         agent.destination = target.position;
@@ -31,6 +34,11 @@ public class SlimeManager : MonoBehaviour
     {
         agent.destination = target.position;
         animator.SetFloat("Distance", agent.remainingDistance);
+
+        if (Vector3.Distance(transform.position, target.position) <= 5)
+        {
+            transform.LookAt(target);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,7 +51,6 @@ public class SlimeManager : MonoBehaviour
             animator.SetTrigger("Hurt");
             Damage(damager.damage);
         }
-
     }
 
     // 被ダメージ
@@ -54,8 +61,10 @@ public class SlimeManager : MonoBehaviour
         {
             hp = 0;
             animator.SetTrigger("Die");
+            Destroy(gameObject, 5f);
         }
         Debug.Log("敵の残りHP" + hp);
+        slimeUIManager.UpdateHP(hp);
     }
 
     // 攻撃判定の有効化

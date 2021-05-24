@@ -24,6 +24,10 @@ public class PlayerAttackBehaviour : StateMachineBehaviour
     {
         //攻撃アニメーション後に速度を戻す
         animator.GetComponent<PlayerManager>().speed = 6;
+        animator.GetComponent<PlayerManager>().leftHandCollider.enabled = false;
+        animator.GetComponent<PlayerManager>().rightHandCollider.enabled = false;
+        animator.GetComponent<PlayerManager>().leftFootCollider.enabled = false;
+        animator.GetComponent<PlayerManager>().rightFootCollider.enabled = false;
 
     }
 

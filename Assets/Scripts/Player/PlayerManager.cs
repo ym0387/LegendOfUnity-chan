@@ -26,10 +26,16 @@ public class PlayerManager : MonoBehaviour
     public Collider leftFootCollider;
     public Collider rightFootCollider;
 
+    //UI
+    public PlayerUIManager playerUIManager;
+
     // HP
     public float maxHp = 100;
     float hp;
-    public PlayerUIManager playerUIManager;
+
+    //スタミナ
+    public float maxStamina = 100;
+    float stamina;
 
     //Die判定
     bool isDie;
@@ -47,10 +53,10 @@ public class PlayerManager : MonoBehaviour
         //コライダー無効
         DisableCollider();
 
-        // 最大HP付与
+        // 最大HP/スタミナ付与
         hp = maxHp;
+        stamina = maxStamina;
         playerUIManager.Init(this);
-
 
     }
 
@@ -58,6 +64,7 @@ public class PlayerManager : MonoBehaviour
     {
         Move();
         Attack();
+        AutoRecovery();
     }
 
     //rayを使用した接地判定メソッド
@@ -115,12 +122,6 @@ public class PlayerManager : MonoBehaviour
                 transform.Rotate(0, rotateSpeed, 0);
             }
 
-            else if(Input.GetKey(KeyCode.DownArrow))
-            {
-                animator.SetFloat("Back", back);
-                moveDirection.z = back;
-            }
-
             //重力を発生させる
             //moveDirection.y -= gravity * Time.deltaTime;
 
@@ -136,17 +137,24 @@ public class PlayerManager : MonoBehaviour
     // 攻撃関数
     public void Attack()
     {
+        //Aキーの入力
         if (Input.GetKeyDown(KeyCode.A))
         {
-            animator.SetTrigger("Attack");
+            //スタミナが20以上の場合
+            if(stamina >= 15)
+            {
+                //スタミナを消費して攻撃
+                stamina -= 15;
+                playerUIManager.UpdateStamina(stamina);
+                animator.SetTrigger("Attack");
+            }
         }
     }
 
     // 当たり判定
     private void OnTriggerEnter(Collider other)
     {
-        //HPが0のときは当たり判定を受付ない
-        if (hp <= 0)
+        if (isDie)
         {
             return;
         }
@@ -202,5 +210,25 @@ public class PlayerManager : MonoBehaviour
         rightHandCollider.enabled = false;
         leftFootCollider.enabled = false;
         rightFootCollider.enabled = false;
+    }
+
+    //自動回復
+    public void AutoRecovery()
+    {
+        if (isDie)
+        {
+            return;
+        }
+        //HP・スタミナの自動回復
+        if (hp <= maxHp)
+        {
+            hp += 0.005f;
+            playerUIManager.UpdateHP(hp);
+        }
+        if(stamina <= maxStamina)
+        {
+            stamina += 0.15f;
+            playerUIManager.UpdateStamina(stamina);
+        }
     }
 }

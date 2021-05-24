@@ -22,6 +22,7 @@ public class SlimeManager : MonoBehaviour
     void Start()
     {
         hp = maxHp;
+
         slimeUIManager.Init(this);
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -32,10 +33,13 @@ public class SlimeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Playerを追跡
         agent.destination = target.position;
         animator.SetFloat("Distance", agent.remainingDistance);
 
-        if (Vector3.Distance(transform.position, target.position) <= 5)
+        //Distanceが5以下になったらPlayerの方を向く
+        if (Vector3.Distance(transform.position, target.position) <= 5
+            && hp >= 0.01)
         {
             transform.LookAt(target);
         }
@@ -78,5 +82,4 @@ public class SlimeManager : MonoBehaviour
     {
         attackCollider.enabled = false;
     }
-
 }

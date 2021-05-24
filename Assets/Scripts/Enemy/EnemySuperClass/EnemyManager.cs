@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SlimeManager : MonoBehaviour
+public class EnemyManager : MonoBehaviour
 {
     public Transform target; //AIのターゲット
     NavMeshAgent agent; // ナビゲーション
@@ -15,18 +15,14 @@ public class SlimeManager : MonoBehaviour
     public int maxHp;
     int hp;
 
-    public SlimeUIManager enemyUIManager;
+    public EnemyUIManager enemyUIManager;
 
-    //脂肪判定
-    bool isDie;
-
+    //死亡判定
+    static bool isDie;
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
-        Debug.Log("Enemyクラス");
-
-
         hp = maxHp;
 
         enemyUIManager.Init(this);
@@ -37,7 +33,7 @@ public class SlimeManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         if (isDie)
         {
@@ -56,7 +52,7 @@ public class SlimeManager : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         if (isDie)
         {
@@ -74,7 +70,7 @@ public class SlimeManager : MonoBehaviour
     }
 
     // 被ダメージ
-    void Damage(int damage)
+    public virtual void Damage(int damage)
     {
         hp -= damage;
         if (hp <= 0)
@@ -89,13 +85,13 @@ public class SlimeManager : MonoBehaviour
     }
 
     // 攻撃判定の有効化
-    public void EnableCollider()
+    public virtual void EnableCollider()
     {
         attackCollider.enabled = true;
     }
 
     // 攻撃判定の無効化
-    public void DisableCollider()
+    public virtual void DisableCollider()
     {
         attackCollider.enabled = false;
     }

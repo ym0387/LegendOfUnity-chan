@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SlimeManager : MonoBehaviour
+public class SkeletonManager : MonoBehaviour
 {
     public Transform target; //AIのターゲット
     NavMeshAgent agent; // ナビゲーション
@@ -15,9 +15,8 @@ public class SlimeManager : MonoBehaviour
     public int maxHp;
     int hp;
 
-    public SlimeUIManager enemyUIManager;
+    public SkeletonUIManager enemyUIManager;
 
-    //脂肪判定
     bool isDie;
 
 
@@ -38,12 +37,11 @@ public class SlimeManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    { 
         if (isDie)
         {
             return;
         }
-
         //Playerを追跡
         agent.destination = target.position;
         animator.SetFloat("Distance", agent.remainingDistance);

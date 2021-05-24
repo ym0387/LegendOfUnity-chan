@@ -141,10 +141,10 @@ public class PlayerManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             //スタミナが20以上の場合
-            if(stamina >= 15)
+            if(stamina >= 30)
             {
                 //スタミナを消費して攻撃
-                stamina -= 15;
+                stamina -= 30;
                 playerUIManager.UpdateStamina(stamina);
                 animator.SetTrigger("Attack");
             }

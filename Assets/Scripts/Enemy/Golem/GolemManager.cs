@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class GolemManager : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class GolemManager : MonoBehaviour
     public GameObject gameClearText;
 
     // Start is called before the first frame update
-    public virtual void Start()
+    public void Start()
     {
         hp = maxHp;
 
@@ -40,26 +41,24 @@ public class GolemManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    public virtual void Update()
+    public void Update()
     {
-        if (isDie)
+        //Distanceが5以下になったらPlayerを追跡
+        if (hp >= 0.01)
         {
-            return;
-        }
+            agent.destination = target.position;
+            animator.SetFloat("Distance", agent.remainingDistance);
 
-        //Playerを追跡
-        agent.destination = target.position;
-        animator.SetFloat("Distance", agent.remainingDistance);
-
-        //Distanceが5以下になったらPlayerの方を向く
-        if (Vector3.Distance(transform.position, target.position) <= 5
-            && hp >= 0.01)
-        {
-            transform.LookAt(target);
+            if (Vector3.Distance(transform.position, target.position) <= 5)
+            {
+                transform.LookAt(target);
+            }
         }
+        
+        GameClear();
     }
 
-    public virtual void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (isDie)
         {
@@ -81,7 +80,7 @@ public class GolemManager : MonoBehaviour
     }
 
     // 被ダメージ
-    public virtual void Damage(int damage)
+    public void Damage(int damage)
     {
         hp -= damage;
         if (hp <= 0)
@@ -90,31 +89,50 @@ public class GolemManager : MonoBehaviour
             animator.SetTrigger("Die");
             Destroy(gameObject, 5f);
             isDie = true;
-            gameClearText.SetActive(true);
         }
         Debug.Log("敵の残りHP" + hp);
         golemUIManager.UpdateHP(hp);
     }
 
     // 攻撃判定の有効化
-    public virtual void EnableColliderForAttack01()
+    public void EnableColliderForAttack01()
     {
         rightHandCollider.enabled = true;
     }
 
-    public virtual void EnableColliderForAttack02()
+    public void EnableColliderForAttack02()
     {
         bodyCollider.enabled = false;
         bodyColliderForAttack.enabled = true;
     }
 
     // 攻撃判定の無効化
-    public virtual void DisableCollider()
+    public void DisableCollider()
     {
         bodyCollider.enabled = true;
         bodyColliderForAttack.enabled = false;
         rightHandCollider.enabled = false;
         leftHandCollider.enabled = false;
+    }
+
+    //ゲームクリア関数
+    public void GameClear()
+    {
+        //ボス倒したら
+        if (isDie)
+        {
+            //ゲームクリアテキスト表示
+            gameClearText.SetActive(true);
+
+            //スペースかマウスクリックで
+            if (Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Space))
+            {
+                //タイトル画面に戻る
+                SceneManager.LoadScene("Title");
+            }
+
+        }
+
     }
 }
 

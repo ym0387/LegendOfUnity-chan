@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -65,6 +66,7 @@ public class PlayerManager : MonoBehaviour
         Move();
         Attack();
         AutoRecovery();
+        GameOver();
     }
 
     //rayを使用した接地判定メソッド
@@ -172,7 +174,6 @@ public class PlayerManager : MonoBehaviour
             hp = 0;
             animator.SetTrigger("Die");
             isDie = true;
-            gameOverText.SetActive(true);
         }
         Debug.Log("プレイヤーの残りHP" + hp);
         playerUIManager.UpdateHP(hp);
@@ -224,5 +225,20 @@ public class PlayerManager : MonoBehaviour
             stamina += 0.15f;
             playerUIManager.UpdateStamina(stamina);
         }
+    }
+
+    //ゲームオーバ関数
+    public void GameOver()
+    {
+        if (isDie)
+        {
+            gameOverText.SetActive(true);
+            if(Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Space))
+            {
+                SceneManager.LoadScene("Title");
+            }
+            
+        }
+
     }
 }

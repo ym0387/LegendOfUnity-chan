@@ -122,15 +122,9 @@ public class PlayerManager : MonoBehaviour
                 transform.Rotate(0, rotateSpeed, 0);
             }
 
-            //重力を発生させる
-            //moveDirection.y -= gravity * Time.deltaTime;
-
             //移動の実行
             Vector3 globalDirection = transform.TransformDirection(moveDirection);
             characterController.Move(globalDirection * Time.deltaTime);
-
-            //速度が０以上の時、Runを実行する
-            //animator.SetBool("Run", moveDirection.z > 0.0f);
         }
     }
 

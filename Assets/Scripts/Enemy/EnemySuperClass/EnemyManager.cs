@@ -6,19 +6,19 @@ using UnityEngine.AI;
 public class EnemyManager : MonoBehaviour
 {
     public Transform target; //AIのターゲット
-    NavMeshAgent agent; // ナビゲーション
-    Animator animator;　// アニメーター
+    protected NavMeshAgent agent; // ナビゲーション
+    protected Animator animator;　// アニメーター
 
     public Collider attackCollider; //攻撃時のコライダー
 
     // HP
     public int maxHp;
-    int hp;
+    protected int hp;
 
     public EnemyUIManager enemyUIManager;
 
     //死亡判定
-    static bool isDie;
+    protected bool isDie;
 
     // Start is called before the first frame update
     public virtual void Start()

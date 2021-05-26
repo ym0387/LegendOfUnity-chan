@@ -9,8 +9,6 @@ public class PlayerManager : MonoBehaviour
     //重力等の変更ができるようにパブリック変数とする
     public float gravity;
     public float speed;
-    public float back;
-    public float jumpSpeed;
     public float rotateSpeed;
 
     //外部から値が変わらないようにPrivateで定義
@@ -230,11 +228,16 @@ public class PlayerManager : MonoBehaviour
     //ゲームオーバ関数
     public void GameOver()
     {
+        //ユニティちゃん死亡時
         if (isDie)
         {
+            //ゲームオーバーテキスト表示
             gameOverText.SetActive(true);
+
+            //スペースかマウスクリックで
             if(Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Space))
             {
+                //タイトル画面に戻る
                 SceneManager.LoadScene("Title");
             }
             

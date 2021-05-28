@@ -87,7 +87,6 @@ public class GolemManager : MonoBehaviour
         {
             hp = 0;
             animator.SetTrigger("Die");
-            Destroy(gameObject, 5f);
             isDie = true;
         }
         Debug.Log("敵の残りHP" + hp);
@@ -125,7 +124,7 @@ public class GolemManager : MonoBehaviour
             gameClearText.SetActive(true);
 
             //スペースかマウスクリックで
-            if (Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetMouseButton(0))
             {
                 //タイトル画面に戻る
                 SceneManager.LoadScene("Title");

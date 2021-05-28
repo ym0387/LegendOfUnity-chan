@@ -237,7 +237,7 @@ public class PlayerManager : MonoBehaviour
             gameOverText.SetActive(true);
 
             //スペースかマウスクリックで
-            if(Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Space))
+            if(Input.GetMouseButton(0))
             {
                 //タイトル画面に戻る
                 SceneManager.LoadScene("Title");

@@ -7,9 +7,11 @@ public class PlayerManager : MonoBehaviour
 {
 
     //重力等の変更ができるようにパブリック変数とする
-    public float gravity;
     public float speed;
     public float rotateSpeed;
+
+    public float hpRecovery;
+    public float staminaRecovery;
 
     //外部から値が変わらないようにPrivateで定義
     private CharacterController characterController;
@@ -132,7 +134,7 @@ public class PlayerManager : MonoBehaviour
     public void Attack()
     {
         //Aキーの入力
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             //スタミナが20以上の場合
             if(stamina >= 30)
@@ -215,12 +217,12 @@ public class PlayerManager : MonoBehaviour
         //HP・スタミナの自動回復
         if (hp <= maxHp)
         {
-            hp += 0.005f;
+            hp += hpRecovery;
             playerUIManager.UpdateHP(hp);
         }
         if(stamina <= maxStamina)
         {
-            stamina += 0.15f;
+            stamina += staminaRecovery;
             playerUIManager.UpdateStamina(stamina);
         }
     }

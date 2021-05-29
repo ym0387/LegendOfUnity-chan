@@ -18,6 +18,7 @@ public class PlayerManager : MonoBehaviour
     private CharacterController characterController;
     private Animator animator;
     private Vector3 moveDirection = Vector3.zero;
+    private Rigidbody rb;
 
     //コライダー制御用
     public Collider leftHandCollider;
@@ -240,8 +241,6 @@ public class PlayerManager : MonoBehaviour
                 //タイトル画面に戻る
                 SceneManager.LoadScene("Title");
             }
-            
         }
-
     }
 }

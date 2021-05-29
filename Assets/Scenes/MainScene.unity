@@ -25467,7 +25467,7 @@ MonoBehaviour:
   rightFootCollider: {fileID: 130475203785087026}
   playerUIManager: {fileID: 130475203785087172}
   maxHp: 100
-  maxStamina: 200
+  maxStamina: 100
   gameOverText: {fileID: 6054892}
 --- !u!1 &130475203785087165
 GameObject:

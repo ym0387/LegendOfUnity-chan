@@ -193,7 +193,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "GAME OVER...\n\n\u753B\u9762\u30AF\u30EA\u30C3\u30AF\u3067\u30B9\u30BF\u30FC\u30C8\u306B\u3082\u3069\u308B"
+  m_Text: 'GAME OVER...
+
+
+    Click screen to restart'
 --- !u!222 &6054895
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5304,7 +5307,7 @@ LightingSettings:
   m_PrefabAsset: {fileID: 0}
   m_Name: Settings.lighting
   serializedVersion: 3
-  m_GIWorkflowMode: 1
+  m_GIWorkflowMode: 0
   m_EnableBakedLightmaps: 1
   m_EnableRealtimeLightmaps: 0
   m_RealtimeEnvironmentLighting: 1
@@ -11219,7 +11222,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "GAME CLEAR ! !\n\n\u753B\u9762\u30AF\u30EA\u30C3\u30AF\u3067\u30B9\u30BF\u30FC\u30C8\u306B\u3082\u3069\u308B"
+  m_Text: 'GAME CLEAR ! !
+
+
+    Click screen to restart'
 --- !u!222 &1079006296
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -25452,9 +25458,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  rotateSpeed: 0.5
-  hpRecovery: 0.01
-  staminaRecovery: 0.2
+  rotateSpeed: 1
+  hpRecovery: 0.05
+  staminaRecovery: 0.3
   leftHandCollider: {fileID: 130475203785087146}
   rightHandCollider: {fileID: 130475203785087208}
   leftFootCollider: {fileID: 130475203785087228}

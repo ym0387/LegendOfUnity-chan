@@ -6,20 +6,18 @@ using UnityEngine.SceneManagement;
 public class PlayerManager : MonoBehaviour
 {
 
-    //重力等の変更ができるようにパブリック変数とする
+    //能力値
     public float speed;
     public float rotateSpeed;
 
+    //自動回復のスピード
     public float hpRecovery;
     public float staminaRecovery;
 
-    //外部から値が変わらないようにPrivateで定義
+    //各要素取得
     private CharacterController characterController;
     private Animator animator;
     private Vector3 moveDirection = Vector3.zero;
-
-    //物理演算用
-    Rigidbody rb;
 
     //コライダー制御用
     public Collider leftHandCollider;

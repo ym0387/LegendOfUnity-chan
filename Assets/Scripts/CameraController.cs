@@ -1,3 +1,5 @@
+//"https://qiita.com/sakura-crowd/items/3608b2fd6df8a953240a"ã‚’å‚è€ƒã«ã—ã¦ã„ã¾ã™
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,29 +8,29 @@ using System.Linq;
 
 public class CameraController : MonoBehaviour
 {
-    /// ”íÊ‘Ì‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢B
+    /// è¢«å†™ä½“ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
     [SerializeField]
     private Transform subject_;
 
-    /// Õ•Á•¨‚ÌƒŒƒCƒ„[–¼‚ÌƒŠƒXƒgB
+    /// é®è”½ç‰©ã®ãƒ¬ã‚¤ãƒ¤ãƒ¼åã®ãƒªã‚¹ãƒˆã€‚
     [SerializeField]
     private List<string> coverLayerNameList_;
 
-    /// Õ•Á•¨‚Æ‚·‚éƒŒƒCƒ„[ƒ}ƒXƒNB
+    /// é®è”½ç‰©ã¨ã™ã‚‹ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒã‚¹ã‚¯ã€‚
     private int layerMask_;
 
-    /// ¡‰ñ‚Ì Update ‚ÅŒŸo‚³‚ê‚½Õ•Á•¨‚Ì Renderer ƒRƒ“ƒ|[ƒlƒ“ƒgB
+    /// ä»Šå›ã® Update ã§æ¤œå‡ºã•ã‚ŒãŸé®è”½ç‰©ã® Renderer ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã€‚
     public List<Renderer> rendererHitsList_ = new List<Renderer>();
 
-    /// ‘O‰ñ‚Ì Update ‚ÅŒŸo‚³‚ê‚½Õ•Á•¨‚Ì Renderer ƒRƒ“ƒ|[ƒlƒ“ƒgB
-    /// ¡‰ñ‚Ì Update ‚ÅŠY“–‚µ‚È‚¢ê‡‚ÍAÕ•Á•¨‚Å‚Í‚È‚­‚È‚Á‚½‚Ì‚Å Renderer ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ—LŒø‚É‚·‚éB
+    /// å‰å›ã® Update ã§æ¤œå‡ºã•ã‚ŒãŸé®è”½ç‰©ã® Renderer ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã€‚
+    /// ä»Šå›ã® Update ã§è©²å½“ã—ãªã„å ´åˆã¯ã€é®è”½ç‰©ã§ã¯ãªããªã£ãŸã®ã§ Renderer ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’æœ‰åŠ¹ã«ã™ã‚‹ã€‚
     public Renderer[] rendererHitsPrevs_;
 
 
     // Use this for initialization
     void Start()
     {
-        // Õ•Á•¨‚ÌƒŒƒCƒ„[ƒ}ƒXƒN‚ğAƒŒƒCƒ„[–¼‚ÌƒŠƒXƒg‚©‚ç‡¬‚·‚éB
+        // é®è”½ç‰©ã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒã‚¹ã‚¯ã‚’ã€ãƒ¬ã‚¤ãƒ¤ãƒ¼åã®ãƒªã‚¹ãƒˆã‹ã‚‰åˆæˆã™ã‚‹ã€‚
         layerMask_ = 0;
         foreach (string _layerName in coverLayerNameList_)
         {
@@ -41,27 +43,27 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // ƒJƒƒ‰‚Æ”íÊ‘Ì‚ğŒ‹‚Ô ray ‚ğì¬
+        // ã‚«ãƒ¡ãƒ©ã¨è¢«å†™ä½“ã‚’çµã¶ ray ã‚’ä½œæˆ
         Vector3 _difference = (subject_.transform.position - this.transform.position);
         Vector3 _direction = _difference.normalized;
         Ray _ray = new Ray(this.transform.position, _direction);
 
-        // ‘O‰ñ‚ÌŒ‹‰Ê‚ğ‘Ş”ğ‚µ‚Ä‚©‚çARaycast ‚µ‚Ä¡‰ñ‚ÌÕ•Á•¨‚ÌƒŠƒXƒg‚ğæ“¾‚·‚é
+        // å‰å›ã®çµæœã‚’é€€é¿ã—ã¦ã‹ã‚‰ã€Raycast ã—ã¦ä»Šå›ã®é®è”½ç‰©ã®ãƒªã‚¹ãƒˆã‚’å–å¾—ã™ã‚‹
         RaycastHit[] _hits = Physics.RaycastAll(_ray, _difference.magnitude, layerMask_);
 
 
         rendererHitsPrevs_ = rendererHitsList_.ToArray();
         rendererHitsList_.Clear();
-        // Õ•Á•¨‚Íˆê“I‚É‚·‚×‚Ä•`‰æ‹@”\‚ğ–³Œø‚É‚·‚éB
+        // é®è”½ç‰©ã¯ä¸€æ™‚çš„ã«ã™ã¹ã¦æç”»æ©Ÿèƒ½ã‚’ç„¡åŠ¹ã«ã™ã‚‹ã€‚
         foreach (RaycastHit _hit in _hits)
         {
-            // Õ•Á•¨‚ª”íÊ‘Ì‚Ìê‡‚Í—áŠO‚Æ‚·‚é
+            // é®è”½ç‰©ãŒè¢«å†™ä½“ã®å ´åˆã¯ä¾‹å¤–ã¨ã™ã‚‹
             if (_hit.collider.gameObject == subject_)
             {
                 continue;
             }
 
-            // Õ•Á•¨‚Ì Renderer ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ–³Œø‚É‚·‚é
+            // é®è”½ç‰©ã® Renderer ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’ç„¡åŠ¹ã«ã™ã‚‹
             Renderer _renderer = _hit.collider.gameObject.GetComponent<Renderer>();
             if (_renderer != null)
             {
@@ -70,10 +72,10 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        // ‘O‰ñ‚Ü‚Å‘ÎÛ‚ÅA¡‰ñ‘ÎÛ‚Å‚È‚­‚È‚Á‚½‚à‚Ì‚ÍA•\¦‚ğŒ³‚É–ß‚·B
+        // å‰å›ã¾ã§å¯¾è±¡ã§ã€ä»Šå›å¯¾è±¡ã§ãªããªã£ãŸã‚‚ã®ã¯ã€è¡¨ç¤ºã‚’å…ƒã«æˆ»ã™ã€‚
         foreach (Renderer _renderer in rendererHitsPrevs_.Except<Renderer>(rendererHitsList_))
         {
-            // Õ•Á•¨‚Å‚È‚­‚È‚Á‚½ Renderer ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ—LŒø‚É‚·‚é
+            // é®è”½ç‰©ã§ãªããªã£ãŸ Renderer ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’æœ‰åŠ¹ã«ã™ã‚‹
             if (_renderer != null)
             {
                 _renderer.enabled = true;

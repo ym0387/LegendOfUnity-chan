@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerManager : MonoBehaviour
 {
 
-    //Move関数部分は"https://xr-hub.com/archives/7391"を参考にコーディング
+    //MoveメソッドとCheckGroundedメソッドに関しては"https://xr-hub.com/archives/7391"を参考にコーディングしてました。
 
     //能力値
     public float speed;

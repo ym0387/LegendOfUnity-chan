@@ -10261,12 +10261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   subject_: {fileID: 130475203785180653}
   coverLayerNameList_:
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Wall
   rendererHitsList_: []
   rendererHitsPrevs_: []
 --- !u!1001 &964234218

@@ -1,4 +1,5 @@
-//"https://qiita.com/sakura-crowd/items/3608b2fd6df8a953240a"を参考にしています
+//以下のコードは@sakura-crowd様のQiirtaの記事を参考にしています。
+//IRL:https://qiita.com/sakura-crowd/items/3608b2fd6df8a953240a
 
 using System.Collections;
 using System.Collections.Generic;
